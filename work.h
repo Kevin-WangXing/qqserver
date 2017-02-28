@@ -23,9 +23,16 @@ public:
 	work(int port);
 	~work();
 
+	void run();
+
 private:
 	int listen_st;
 	int socket_client[CLIENTCOUNT];//声明socket_client数组，管理client的socket链接
+
+	int setnonblocking(int st);//设置socket为非阻塞e
+	int socket_accept();
+	int socket_recv(int st);
+	void user_logout(int st);//client socket连接断开
 
 };
 

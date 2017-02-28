@@ -11,6 +11,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
+#include <signal.h>
 
 #include "pub.h"
 #include "work.h"
@@ -29,8 +30,16 @@ int main(int arg, char *args[])
 		return -1;
 	}
 
-	setdaemon();//将进程设置为daemon状态（即使关闭窗口依旧可以后台工作）
+	//setdaemon();//将进程设置为daemon状态（即使关闭窗口依旧可以后台工作）
 	work w(iport);
+
+
 	printf("qqserver begin\n");
+
+	signal1(SIGINT, catch_Signal);
+	signal1(SIGPIPE, catch_Signal);
+
+	w.run();
+	printf("qqserver end\n");
 	return 0;
 }

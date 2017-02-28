@@ -2,7 +2,7 @@
 
 CC = g++
 
-SRCS1 = qqserver.cpp\
+SRCS1 = serverqq.cpp\
 		pub.cpp\
 		work.cpp
 

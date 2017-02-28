@@ -12,4 +12,7 @@
 void setdaemon();
 int socket_create(int port);
 
+int signal1(int signo, void (*func)(int));
+void catch_Signal(int Sign);
+
 #endif /* PUB_H_ */

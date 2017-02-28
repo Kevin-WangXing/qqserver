@@ -14,6 +14,25 @@
 #include <arpa/inet.h>
 #include <signal.h>
 
+void catch_Signal(int Sign)
+{
+	switch(Sign)
+	{
+	case SIGINT:
+		break;
+	case SIGPIPE://如果一个非阻塞socket已经关闭，在这个socket上调用send函数，会触发一个SIGPIPE消息
+		break;
+	}
+}
+
+int signal1(int signo, void (*func)(int))
+{
+	struct sigaction act, oact;
+	act.sa_handler = func;
+	sigemptyset(&act.sa_mask);
+	act.sa_flags = 0;
+	return sigaction(signo, &act, &oact);
+}
 
 void setdaemon()
 {
@@ -33,6 +52,18 @@ void setdaemon()
 		printf("setsid failed %s\n", strerror(errno));
 		exit(EXIT_FAILURE);
 	}
+
+	/*
+	 if (chdir("/") < 0)
+	 {
+	 printf("chdir failed %s\n", strerror(errno));
+	 exit(EXIT_FAILURE);
+	 }
+	 umask(0);
+	 close(STDIN_FILENO);
+	 close(STDOUT_FILENO);
+	 close(STDERR_FILENO);
+	 */
 }
 
 int socket_create(int port)//创建参数port指定端口号的server端socket
